@@ -1,0 +1,66 @@
+[
+  {
+    "id_per": 1,
+    "jugador_padre": "LunaWolf",
+    "id_cam": null,
+    "nombre_per": "Arkan",
+    "nivel": 12,
+    "imagen": "./assets/Arkan.jpg"
+  },
+  {
+    "id_per": 3,
+    "jugador_padre": "PixelMage",
+    "id_cam": 1,
+    "nombre_per": "Dravok",
+    "nivel": 15,
+    "imagen": "./assets/Dravok.jpg"
+  },
+  {
+    "id_per": 4,
+    "jugador_padre": "SkyRunner",
+    "id_cam": 1,
+    "nombre_per": "Nymra",
+    "nivel": 5,
+    "imagen": "./assets/Nymra.jpg"
+  },
+  {
+    "id_per": 60,
+    "jugador_padre": "DarkBade",
+    "id_cam": 1,
+    "nombre_per": "Selene",
+    "nivel": 6,
+    "imagen": "./assets/Selene.jpg"
+  },
+  {
+    "id_per": 103,
+    "jugador_padre": "admin",
+    "id_cam": 58,
+    "nombre_per": "Aragorn",
+    "nivel": 1,
+    "imagen": "./assets/Aragorn.jpg"
+  },
+  {
+    "id_per": 104,
+    "jugador_padre": "admin",
+    "id_cam": 58,
+    "nombre_per": "Gimli",
+    "nivel": 5,
+    "imagen": "./assets/Gimli.jpg"
+  },
+  {
+    "id_per": 106,
+    "jugador_padre": "admin",
+    "id_cam": 58,
+    "nombre_per": "Legolas",
+    "nivel": 10,
+    "imagen": "./assets/Legolas.jpg"
+  },
+  {
+    "id_per": 108,
+    "jugador_padre": "admin2",
+    "id_cam": 58,
+    "nombre_per": "Saruman",
+    "nivel": 20,
+    "imagen": "./assets/Saruman.jpg"
+  }
+]
