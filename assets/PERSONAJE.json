@@ -5,7 +5,7 @@
     "id_cam": null,
     "nombre_per": "Arkan",
     "nivel": 12,
-    "imagen": "./assets/Arkan.jpg"
+    "imagen": "Arkan.jpg"
   },
   {
     "id_per": 3,
@@ -13,7 +13,7 @@
     "id_cam": 1,
     "nombre_per": "Dravok",
     "nivel": 15,
-    "imagen": "./assets/Dravok.jpg"
+    "imagen": "Dravok.jpg"
   },
   {
     "id_per": 4,
@@ -21,7 +21,7 @@
     "id_cam": 1,
     "nombre_per": "Nymra",
     "nivel": 5,
-    "imagen": "./assets/Nymra.jpg"
+    "imagen": "Nymra.jpg"
   },
   {
     "id_per": 60,
@@ -29,7 +29,7 @@
     "id_cam": 1,
     "nombre_per": "Selene",
     "nivel": 6,
-    "imagen": "./assets/Selene.jpg"
+    "imagen": "Selene.jpg"
   },
   {
     "id_per": 103,
@@ -37,7 +37,7 @@
     "id_cam": 58,
     "nombre_per": "Aragorn",
     "nivel": 1,
-    "imagen": "./assets/Aragorn.jpg"
+    "imagen": "Aragorn.jpg"
   },
   {
     "id_per": 104,
@@ -45,7 +45,7 @@
     "id_cam": 58,
     "nombre_per": "Gimli",
     "nivel": 5,
-    "imagen": "./assets/Gimli.jpg"
+    "imagen": "Gimli.jpg"
   },
   {
     "id_per": 106,
@@ -53,7 +53,7 @@
     "id_cam": 58,
     "nombre_per": "Legolas",
     "nivel": 10,
-    "imagen": "./assets/Legolas.jpg"
+    "imagen": "Legolas.jpg"
   },
   {
     "id_per": 108,
@@ -61,6 +61,6 @@
     "id_cam": 58,
     "nombre_per": "Saruman",
     "nivel": 20,
-    "imagen": "./assets/Saruman.jpg"
+    "imagen": "Saruman.jpg"
   }
 ]

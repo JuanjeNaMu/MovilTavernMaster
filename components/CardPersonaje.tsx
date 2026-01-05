@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as R from 'ramda';
 import { globalStyles } from '../styles/GlobalStyles';
 import { Personaje } from '../types/Personaje'
+import { cogerRuta } from '../utils/Funciones'
 
 type CardPersonajeProps = {
   nombre: string;
@@ -30,26 +31,7 @@ export default function CardPersonaje({
   imagenRuta 
 }: CardPersonajeProps) {
   
-  function getImageSource() {
-    if (!imagenRuta) {
-      return require('../assets/Icon_usuario.png');
-    }
-    
-    const nombreArchivo = imagenRuta.split('/').pop()?.replace('.jpg', '') || '';
-    
-    if (nombreArchivo === 'Aragorn') return require('../assets/Aragorn.jpg');
-    if (nombreArchivo === 'Arkan') return require('../assets/Arkan.jpg');
-    if (nombreArchivo === 'Dravok') return require('../assets/Dravok.jpg');
-    if (nombreArchivo === 'Gimli') return require('../assets/Gimli.jpg');
-    if (nombreArchivo === 'Legolas') return require('../assets/Legolas.jpg');
-    if (nombreArchivo === 'Nymra') return require('../assets/Nymra.jpg');
-    if (nombreArchivo === 'Saruman') return require('../assets/Saruman.jpg');
-    if (nombreArchivo === 'Selene') return require('../assets/Selene.jpg');
-    
-    return require('../assets/Icon_usuario.png');
-  }
-
-  const imageSource = getImageSource();
+  const imageSource = cogerRuta(imagenRuta);
 
   return (
     <View style={globalStyles.cardPersonaje}>

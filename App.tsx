@@ -57,14 +57,14 @@ export default function App() {
 
         <Listado/>
         
-        <View style={globalStyles.contenedorBotones}>
+        {/* <View style={globalStyles.contenedorBotones}>
           <Pressable style={globalStyles.botonAmarillo}>
             <Text style={globalStyles.textoBoton}>Buscarle Campaña</Text>
           </Pressable>
           <Pressable style={globalStyles.botonRojo}>
             <Text style={globalStyles.textoBoton}>Quitar de Campaña</Text>
           </Pressable>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   )
