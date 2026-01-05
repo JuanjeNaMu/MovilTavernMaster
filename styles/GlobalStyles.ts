@@ -4,10 +4,9 @@ export const globalStyles = StyleSheet.create({
 
   contenedorSafeArea: {
     flex: 1,
-    backgroundColor: '#F5E6D3',
+    backgroundColor: '#F5F5DC',
   },
   contenedorCabecera: {
-    backgroundColor: '#F5E6D3',
     paddingHorizontal: 20,
     paddingVertical: 16,
     flexDirection: 'row',
@@ -20,7 +19,7 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 20,
-    backgroundColor: '#FFF9F0',
+    backgroundColor: '#FAF8F0',
     padding: 20,
     borderRadius: 12,
     borderWidth: 2,
@@ -158,4 +157,14 @@ export const globalStyles = StyleSheet.create({
     color: '#5D4037',
     flex: 1,
   },
+  barraBusqueda: {
+    marginHorizontal: 10,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    fontSize: 16,
+    }
 });

@@ -55,7 +55,7 @@ export default function CardPersonaje({
           </View>
           <View style={globalStyles.filaCard}>
             <Text style={globalStyles.atributoPersonaje}>Campaña:</Text>
-            <Text style={globalStyles.valorAtributo}>"{campania || 'Sin campaña'}"</Text>
+            <Text style={globalStyles.valorAtributo}>{campania}</Text>
           </View>
           <View style={globalStyles.filaCard}>
             <Text style={globalStyles.atributoPersonaje}>ID:</Text>

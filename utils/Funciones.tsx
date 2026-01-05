@@ -1,5 +1,3 @@
-import { Alert, BackHandler} from 'react-native';
-
 export const cogerRuta = (imagenNombre?: string): any => {
   const defaultImage = require('../assets/Icon_usuario.png');
   
@@ -18,6 +16,8 @@ export const cogerRuta = (imagenNombre?: string): any => {
   
   return listadoImagenes[imagenNombre] || defaultImage;
 };
+
+import { Alert, BackHandler} from 'react-native';
 
 export const cerrarApp = (): void => {
   Alert.alert(

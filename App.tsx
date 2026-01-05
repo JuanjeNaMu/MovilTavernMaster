@@ -14,6 +14,8 @@ import Listado from './components/Listado'
 import { cerrarApp } from './utils/Funciones'
 
 export default function App() {
+  const [busqueda, setBusqueda] = useState('');
+
   return (
     <SafeAreaView style={globalStyles.contenedorSafeArea}>
       <View style={globalStyles.contenedorCabecera}>
@@ -25,8 +27,7 @@ export default function App() {
         <View style={globalStyles.contenedorDatosUsuario}>
           <View>
             <Text style={globalStyles.textoUsuario}> Administrador</Text>
-            <Pressable style={globalStyles.botonRojo}
-            onPress={cerrarApp}>
+            <Pressable style={globalStyles.botonRojo} onPress={cerrarApp}>
               <Text style={globalStyles.textoBoton}>Cerrar Sesión</Text>
             </Pressable>
           </View>
@@ -45,21 +46,34 @@ export default function App() {
       </View>
       
       <View style={globalStyles.contenedorPrincipal}>
+        <TextInput
+          style={globalStyles.barraBusqueda}
+          placeholder="Buscar personaje por nombre..."
+          value={busqueda}
+          onChangeText={setBusqueda}
+        />
+
         <View style={globalStyles.contenedorBotones}>
-          <Pressable style={globalStyles.botonVerde}>
+          <Pressable 
+            style={globalStyles.botonVerde}
+          >
             <Text style={globalStyles.textoBoton}>Crear Nuevo</Text>
           </Pressable>
-          <Pressable style={globalStyles.botonAmarillo}>
+          <Pressable 
+            style={globalStyles.botonAmarillo}
+          >
             <Text style={globalStyles.textoBoton}>Editar</Text>
           </Pressable>
-          <Pressable style={globalStyles.botonRojo}>
+          <Pressable 
+            style={globalStyles.botonRojo}
+          >
             <Text style={globalStyles.textoBoton}>Borrar</Text>
           </Pressable>
         </View>
 
-        <Listado/>
+        <Listado busqueda={busqueda}/>
         
       </View>
     </SafeAreaView>
-  )
+  );
 }

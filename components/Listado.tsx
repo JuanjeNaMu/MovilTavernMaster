@@ -1,37 +1,53 @@
-import { ActivityIndicator, ScrollView, StyleSheet, View, Text, ImageBackground, useColorScheme, ImageSourcePropType, TextInput, Pressable, Modal, Alert, FlatList, TextInputComponent, ColorValue} from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { useFonts } from 'expo-font'
-import { Image } from 'expo-image'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { FlatList, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Platform } from 'react-native'
 import axios from "axios";
-import dayjs from "dayjs";
-import { Picker } from '@react-native-picker/picker'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as R from 'ramda';
 import { globalStyles } from '../styles/GlobalStyles';
 import CardPersonaje from './CardPersonaje'
-import personajesData from '../assets/PERSONAJE.json';
-import { Personaje } from '../types/Personaje'
+import { Personaje, Personajes } from '../types/Personaje'
 
-export default function Listado() {
-  const personajes: Personaje[] = personajesData;
+type ListadoProps = {
+  busqueda: string;
+}
+
+export default function Listado({ busqueda }: ListadoProps) {
+  const [personajes, setPersonajes] = useState<Personajes>([]);
+
+  useEffect(() => {
+    cargarPersonajes();
+  }, []);
+
+  const cargarPersonajes = async () => {
+    try {
+      const IP = Platform.OS === "android" ? "10.0.2.2" : "localhost";
+      const url = `http://${IP}:3000/personajes`;
+      const respuesta = await axios.get(url);
+      setPersonajes(respuesta.data);
+    } catch (error) {
+      console.error("Error al cargar personajes:", error);
+    }
+  };
+
+  const personajesFiltrados = personajes.filter(personaje =>
+    personaje.nombre_per.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   return (
-    <FlatList
-      data={personajes}
-      keyExtractor={(item) => item.id_per.toString()}
-      renderItem={({item}) => (
-        <CardPersonaje
-          nombre={item.nombre_per}
-          nivel={item.nivel}
-          jugador={item.jugador_padre}
-          campania={item.cam?.toString() || 'SIN CAMPAÑA'}
-          id={item.id_per}
-          imagenRuta={item.imagen}
-        />
-      )}
-      contentContainerStyle={{ paddingBottom: 20 }}
-    />
-  )
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={personajesFiltrados}
+        keyExtractor={(item) => item.id_per.toString()}
+        renderItem={({item}) => (
+          <CardPersonaje
+            nombre={item.nombre_per}
+            nivel={item.nivel}
+            jugador={item.jugador_padre}
+            campania={item.cam?.toString() || 'Sin Campaña'}
+            id={item.id_per}
+            imagenRuta={item.imagen}
+          />
+        )}
+      />
+    </View>
+  );
 }
