@@ -1,3 +1,5 @@
+import { Alert, BackHandler} from 'react-native';
+
 export const cogerRuta = (imagenNombre?: string): any => {
   const defaultImage = require('../assets/Icon_usuario.png');
   
@@ -17,5 +19,19 @@ export const cogerRuta = (imagenNombre?: string): any => {
   return listadoImagenes[imagenNombre] || defaultImage;
 };
 
-export const formatCampania = (campaniaId?: string | number | null): string => 
-  campaniaId == null ? 'Sin campaña' : `Campaña ${campaniaId}`;
+export const cerrarApp = (): void => {
+  Alert.alert(
+    "Cerrar sesión",
+    "¿Estás seguro de que quieres cerrar la aplicación?",
+    [
+      {
+        text: "Cancelar",
+        style: "cancel"
+      },
+      {
+        text: "Sí, cerrar",
+        onPress: () => BackHandler.exitApp()
+      }
+    ]
+  );
+};

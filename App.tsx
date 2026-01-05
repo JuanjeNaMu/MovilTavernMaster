@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as R from 'ramda';
 import { globalStyles } from './styles/GlobalStyles'
 import Listado from './components/Listado'
+import { cerrarApp } from './utils/Funciones'
 
 export default function App() {
   return (
@@ -23,14 +24,15 @@ export default function App() {
         />
         <View style={globalStyles.contenedorDatosUsuario}>
           <View>
-            <Text style={globalStyles.textoUsuario}>Nombre Usuario</Text>
-            <Pressable style={globalStyles.botonRojo}>
+            <Text style={globalStyles.textoUsuario}> Administrador</Text>
+            <Pressable style={globalStyles.botonRojo}
+            onPress={cerrarApp}>
               <Text style={globalStyles.textoBoton}>Cerrar Sesión</Text>
             </Pressable>
           </View>
           <View style={globalStyles.contenedorImagenUsuario}>
             <Image
-              source={require("./assets/Icon_usuario.png")}
+              source={require("./assets/iconAdmin.png")}
               style={globalStyles.imagenUsuario}
               contentFit='cover'
             />
@@ -57,14 +59,6 @@ export default function App() {
 
         <Listado/>
         
-        {/* <View style={globalStyles.contenedorBotones}>
-          <Pressable style={globalStyles.botonAmarillo}>
-            <Text style={globalStyles.textoBoton}>Buscarle Campaña</Text>
-          </Pressable>
-          <Pressable style={globalStyles.botonRojo}>
-            <Text style={globalStyles.textoBoton}>Quitar de Campaña</Text>
-          </Pressable>
-        </View> */}
       </View>
     </SafeAreaView>
   )

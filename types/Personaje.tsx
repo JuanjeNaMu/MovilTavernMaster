@@ -3,6 +3,6 @@ export type Personaje = {
   nombre_per: string;
   nivel: number;
   jugador_padre: string;
-  id_cam?: number | null;
+  cam?: string | null;
   imagen?: string;
 }

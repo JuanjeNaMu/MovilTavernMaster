@@ -26,7 +26,7 @@ export default function Listado() {
           nombre={item.nombre_per}
           nivel={item.nivel}
           jugador={item.jugador_padre}
-          campania={item.id_cam?.toString() || 'Sin campaña'}
+          campania={item.cam?.toString() || 'SIN CAMPAÑA'}
           id={item.id_per}
           imagenRuta={item.imagen}
         />
