@@ -166,5 +166,34 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     fontSize: 16,
-    }
+  },
+    modal: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+    ventanaModal: {
+    backgroundColor: '#FFF9F0',
+    borderRadius: 8,
+    width: '95%',
+  },
+    modalBody: { 
+      flexDirection: 'row', 
+      padding: 10, 
+      maxHeight: 600 
+  },
+    modalIzquierda: {
+      flex: 1, 
+      alignItems: 'center', 
+      marginRight: 20 
+  },
+    imagenModal: {
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      marginBottom: 15,
+      borderWidth: 2,
+      borderColor: '#8B6F47',
+  }
 });

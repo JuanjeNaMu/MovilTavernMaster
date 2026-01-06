@@ -8,13 +8,99 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { Picker } from '@react-native-picker/picker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as R from 'ramda';
 import { globalStyles } from './styles/GlobalStyles'
 import Listado from './components/Listado'
-import { cerrarApp } from './utils/Funciones'
+import ModalPersonaje from './components/ModalPersonaje'
+import { cerrarApp} from './utils/Funciones'
+import { CRUDcargarPersonajes, CRUDcrearNuevoPersonaje, CRUDactualizarPersonaje, CRUDeliminarPersonaje } from './utils/CrudPersonajes'
+import { Personaje, DatosFormularioPersonaje } from './types/Personaje'
 
 export default function App() {
   const [busqueda, setBusqueda] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modoEdicion, setModoEdicion] = useState(false);
+  const [personajeSeleccionado, setPersonajeSeleccionado] = useState<Personaje | null>(null);
+  const [personajes, setPersonajes] = useState<Personaje[]>([]);
+  const [refrescar, setRefrescar] = useState(0);
+
+  useEffect(() => {cargarListaPersonajes();}, []);
+
+  const cargarListaPersonajes = async () => {
+    try {
+      const datos = await CRUDcargarPersonajes();
+      setPersonajes(datos);
+      setRefrescar(prev => prev + 1);
+    } catch (error) {
+      console.error("Error al cargar personajes:", error);
+    }
+  };
+
+  const seleccionarPersonaje = (personaje: Personaje) => {
+    setPersonajeSeleccionado(personaje);
+  };
+
+  const crearNuevoPer = () => {
+    setPersonajeSeleccionado(null);
+    setModoEdicion(false);
+    setModalVisible(true);
+  };
+
+  const editarPer = () => {
+    if (!personajeSeleccionado) {
+      Alert.alert("Error", "Por favor, selecciona un personaje para editar");
+      return;
+    }
+    setModoEdicion(true);
+    setModalVisible(true);
+  };
+
+  const borrarPer = () => {
+    if (!personajeSeleccionado) {
+      Alert.alert("Error", "Por favor, selecciona un personaje para borrar");
+      return;
+    }
+
+    Alert.alert(
+      "Confirmar eliminación",
+      `¿Estás seguro de que quieres eliminar a ${personajeSeleccionado.nombre_per}?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Eliminar",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await CRUDeliminarPersonaje(personajeSeleccionado.id);
+              await cargarListaPersonajes();
+              setPersonajeSeleccionado(null);
+              Alert.alert("Éxito", "Personaje eliminado correctamente");
+            } catch (error) {
+              console.error("Error al eliminar personaje:", error);
+              Alert.alert("Error", "No se pudo eliminar el personaje");
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const guardarPersonaje = async (datos: DatosFormularioPersonaje) => {
+    try {
+      if (modoEdicion && personajeSeleccionado) {
+        await CRUDactualizarPersonaje(personajeSeleccionado.id, datos);
+        Alert.alert("Éxito", "Personaje actualizado correctamente");
+      } else {
+        await CRUDcrearNuevoPersonaje(datos);
+        Alert.alert("Éxito", "Personaje creado correctamente");
+      }
+      await cargarListaPersonajes();
+      setModalVisible(false);
+      setPersonajeSeleccionado(null);
+    } catch (error) {
+      console.error("Error al guardar personaje:", error);
+      Alert.alert("Error", "No se pudo guardar el personaje");
+    }
+  };
 
   return (
     <SafeAreaView style={globalStyles.contenedorSafeArea}>
@@ -56,23 +142,46 @@ export default function App() {
         <View style={globalStyles.contenedorBotones}>
           <Pressable 
             style={globalStyles.botonVerde}
+            onPress={crearNuevoPer}
           >
             <Text style={globalStyles.textoBoton}>Crear Nuevo</Text>
           </Pressable>
           <Pressable 
-            style={globalStyles.botonAmarillo}
+            style={[
+              globalStyles.botonAmarillo,
+              !personajeSeleccionado && { opacity: 0.5 }
+            ]}
+            onPress={editarPer}
+            disabled={!personajeSeleccionado}
           >
             <Text style={globalStyles.textoBoton}>Editar</Text>
           </Pressable>
           <Pressable 
-            style={globalStyles.botonRojo}
+            style={[
+              globalStyles.botonRojo,
+              !personajeSeleccionado && { opacity: 0.5 }
+            ]}
+            onPress={borrarPer}
+            disabled={!personajeSeleccionado}
           >
             <Text style={globalStyles.textoBoton}>Borrar</Text>
           </Pressable>
         </View>
 
-        <Listado busqueda={busqueda}/>
+        <Listado 
+          busqueda={busqueda}
+          onSeleccionarPersonaje={seleccionarPersonaje}
+          personajeSeleccionadoId={personajeSeleccionado?.id}
+          key={refrescar}
+        />
         
+        <ModalPersonaje
+          visible={modalVisible}
+          cerrar={() => setModalVisible(false)}
+          guardar={guardarPersonaje}
+          personaje={personajeSeleccionado}
+          modoEdicion={modoEdicion}
+        />
       </View>
     </SafeAreaView>
   );

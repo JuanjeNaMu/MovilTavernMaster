@@ -66,11 +66,11 @@
     },
     {
       "id": 9,
+      "jugador_padre": "admin2",
+      "cam": "La Guerra del Anillo",
       "nombre_per": "Prueba",
-      "nivel": 8,
-      "jugador_padre": "Jose",
-      "cam": "La Comarca",
-      "imagen": "icon_usuario.png"
+      "nivel": 10,
+      "imagen": "Icon_usuario.jpg"
     }
   ]
 }

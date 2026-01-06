@@ -1,3 +1,7 @@
+import { Alert, BackHandler, Platform } from "react-native";
+import { DatosFormularioPersonaje, Personaje, Personajes } from "../types/Personaje";
+import axios from "axios";
+
 export const cogerRuta = (imagenNombre?: string): any => {
   const defaultImage = require('../assets/Icon_usuario.png');
   
@@ -12,12 +16,11 @@ export const cogerRuta = (imagenNombre?: string): any => {
     'Gimli.jpg': require('../assets/Gimli.jpg'),
     'Legolas.jpg': require('../assets/Legolas.jpg'),
     'Saruman.jpg': require('../assets/Saruman.jpg'),
+    'icon_usuario.png': require('../assets/Icon_usuario.png'),
   };
   
   return listadoImagenes[imagenNombre] || defaultImage;
 };
-
-import { Alert, BackHandler} from 'react-native';
 
 export const cerrarApp = (): void => {
   Alert.alert(

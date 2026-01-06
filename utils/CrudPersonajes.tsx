@@ -4,18 +4,18 @@ import axios from "axios";
 
 const IP = Platform.OS === "android" ? "10.0.2.2" : "localhost";
 
-export async function cargarPersonajes(): Promise<Personajes> {
+export async function CRUDcargarPersonajes(): Promise<Personajes> {
   const url = `http://${IP}:3000/personajes`;
   const respuesta = await axios.get(url);
   return respuesta.data;
 }
 
-export async function crearNuevoPersonaje(datos: DatosFormularioPersonaje): Promise<Personaje> {
-  const personajes = await cargarPersonajes();
-  const nuevoId = Math.max(...personajes.map(p => p.id_per), 0) + 1;
+export async function CRUDcrearNuevoPersonaje(datos: DatosFormularioPersonaje): Promise<Personaje> {
+  const personajes = await CRUDcargarPersonajes();
+  const nuevoId = Math.max(...personajes.map(p => p.id), 0) + 1;
   
   const personaje: Personaje = {
-    id_per: nuevoId,
+    id: nuevoId,
     nombre_per: datos.nombre_per,
     nivel: datos.nivel,
     jugador_padre: datos.jugador_padre,
@@ -28,13 +28,13 @@ export async function crearNuevoPersonaje(datos: DatosFormularioPersonaje): Prom
   return personaje;
 }
 
-export async function actualizarPersonaje(id: number, datos: Partial<DatosFormularioPersonaje>): Promise<Personaje> {
+export async function CRUDactualizarPersonaje(id: number, datos: Partial<DatosFormularioPersonaje>): Promise<Personaje> {
   const URL = `http://${IP}:3000/personajes/${id}`;
   const respuesta = await axios.put(URL, datos);
   return respuesta.data;
 }
 
-export async function eliminarPersonaje(id: number): Promise<void> {
+export async function CRUDeliminarPersonaje(id: number): Promise<void> {
   const URL = `http://${IP}:3000/personajes/${id}`;
   await axios.delete(URL);
 }

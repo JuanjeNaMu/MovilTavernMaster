@@ -1,5 +1,5 @@
 export type Personaje = {
-  id_per: number;
+  id: number;
   jugador_padre: string;
   cam: string | null;
   nombre_per: string;
