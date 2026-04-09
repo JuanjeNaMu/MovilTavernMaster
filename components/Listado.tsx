@@ -1,63 +1,69 @@
-import { ActivityIndicator, ScrollView, StyleSheet, View, Text, ImageBackground, useColorScheme, ImageSourcePropType, TextInput, Pressable, Modal, Alert, FlatList, TextInputComponent, ColorValue} from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { useFonts } from 'expo-font'
-import { Image } from 'expo-image'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import React, { ReactNode, useEffect, useState } from 'react'
-import axios from "axios";
-import dayjs from "dayjs";
-import { Picker } from '@react-native-picker/picker'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as R from 'ramda';
-import { Platform } from 'react-native'
-import { globalStyles } from '../styles/GlobalStyles';
-import CardPersonaje from './CardPersonaje'
-import { Personaje, Personajes } from '../types/Personaje'
+import React from "react";
+import { View, FlatList, RefreshControl } from "react-native";
+import { globalStyles } from "../styles/GlobalStyles";
+import CardPersonaje from "./CardPersonaje";
+import type { Personaje, Personajes } from "../types/Personaje";
+import { TEMA } from "../utils/temaApp";
 
 type ListadoProps = {
+  personajes: Personajes;
   busqueda: string;
+  clasePorPersonajeId?: Record<number, string>;
+  nombresCampanaPorIdCam?: Record<number, string>;
   onSeleccionarPersonaje: (personaje: Personaje) => void;
   personajeSeleccionadoId?: number;
-}
+  refrescando?: boolean;
+  onRefrescar?: () => void;
+  onVerFicha?: (personaje: Personaje) => void;
+  onEditarPersonaje?: (personaje: Personaje) => void;
+};
 
-export default function Listado({ busqueda, onSeleccionarPersonaje, personajeSeleccionadoId }: ListadoProps) {
-  const [personajes, setPersonajes] = useState<Personajes>([]);
-
-  useEffect(() => {
-    cargarPersonajes();}, []);
-
-  const cargarPersonajes = async () => {
-    try {
-      const IP = Platform.OS === "android" ? "10.0.2.2" : "localhost";
-      const url = `http://${IP}:3000/personajes`;
-      const respuesta = await axios.get(url);
-      setPersonajes(respuesta.data);
-    } catch (error) {
-      console.error("Error al cargar personajes:", error);
-    }
-  };
-
-  const personajesFiltrados = personajes.filter(personaje =>
-    personaje.nombre_per.toLowerCase().includes(busqueda.toLowerCase())
+export default function Listado({
+  personajes,
+  busqueda,
+  clasePorPersonajeId,
+  nombresCampanaPorIdCam,
+  onSeleccionarPersonaje,
+  personajeSeleccionadoId,
+  refrescando = false,
+  onRefrescar,
+  onVerFicha,
+  onEditarPersonaje,
+}: ListadoProps) {
+  const personajesFiltrados = personajes.filter((personaje) =>
+    personaje.nombre_per.toLowerCase().includes(busqueda.toLowerCase()),
   );
 
   return (
     <View style={globalStyles.contenedorCard}>
       <FlatList
         data={personajesFiltrados}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => (
+        extraData={{ lista: personajesFiltrados, sel: personajeSeleccionadoId }}
+        keyExtractor={(item) => String(item.id_per)}
+        refreshControl={
+          onRefrescar ? (
+            <RefreshControl refreshing={refrescando} onRefresh={onRefrescar} tintColor={TEMA.rojo} />
+          ) : undefined
+        }
+        renderItem={({ item }) => {
+          const idCam =
+            item.id_cam == null ? null : Number(item.id_cam);
+          const nombreCam =
+            idCam != null && Number.isFinite(idCam)
+              ? nombresCampanaPorIdCam?.[idCam]
+              : undefined;
+          return (
           <CardPersonaje
-            nombre={item.nombre_per}
-            nivel={item.nivel}
-            jugador={item.jugador_padre}
-            campania={item.cam?.toString() || 'Sin Campaña'}
-            id={item.id}
-            imagenRuta={item.imagen}
-            seleccionado={personajeSeleccionadoId === item.id}
+            personaje={item}
+            claseFicha={clasePorPersonajeId?.[item.id_per]}
+            nombreCampana={nombreCam}
+            seleccionado={personajeSeleccionadoId === item.id_per}
             onPress={() => onSeleccionarPersonaje(item)}
+            onVerFicha={onVerFicha ? () => onVerFicha(item) : undefined}
+            onEditar={onEditarPersonaje ? () => onEditarPersonaje(item) : undefined}
           />
-        )}
+          );
+        }}
       />
     </View>
   );

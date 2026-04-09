@@ -63,14 +63,6 @@
       "nombre_per": "Saruman",
       "nivel": 20,
       "imagen": "Saruman.jpg"
-    },
-    {
-      "id": 9,
-      "nombre_per": "Prueba",
-      "nivel": 8,
-      "jugador_padre": "Jose",
-      "cam": "La Comarca",
-      "imagen": "icon_usuario.png"
     }
   ]
 }
