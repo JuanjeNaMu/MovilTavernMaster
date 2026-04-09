@@ -62,7 +62,7 @@ export default function PantallaLogin({ onSesionIniciada }: PantallaLoginProps) 
             contentFit="contain"
           />
           <Text style={styles.titulo}>TavernMaster</Text>
-          <Text style={styles.sub}>Inicia sesión con tu usuario de jugador</Text>
+          <Text style={styles.sub}>Inicia sesión con tu nombre de Jugador</Text>
 
           <Text style={styles.label}>Usuario</Text>
           <TextInput
