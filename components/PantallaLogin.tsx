@@ -16,6 +16,7 @@ import { globalStyles } from "../styles/GlobalStyles";
 import { TEMA } from "../utils/temaApp";
 import { loginApi, LoginFallidoError } from "../utils/authApi";
 import { guardarSesion, type Sesion } from "../utils/authSession";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 type PantallaLoginProps = {
   onSesionIniciada: (sesion: Sesion) => void;
@@ -39,9 +40,10 @@ export default function PantallaLogin({ onSesionIniciada }: PantallaLoginProps) 
         Alert.alert("Login", e.message);
       } else {
         console.error(e);
+        const detalle = e instanceof Error ? `\nDetalle: ${e.message}` : "";
         Alert.alert(
           "Conexión",
-          "No se pudo contactar con la API. ¿Está Spring en el puerto 8080?",
+          `No se pudo contactar con la API.\nURL: ${API_BASE_URL}\n¿Está Spring en puerto 8080 y accesible desde el móvil?${detalle}`,
         );
       }
     } finally {

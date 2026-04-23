@@ -27,7 +27,7 @@ import {
   type HabilidadKey,
   type SalvacionKey,
 } from "../utils/fichaDnD";
-import { CRUDobtenerFicha } from "../utils/CrudPersonajes";
+import { CRUDobtenerAtaquesPorPersonaje, CRUDobtenerFicha } from "../utils/CrudPersonajes";
 import { TEMA, tintePorClase } from "../utils/temaApp";
 
 type ModalFichaProps = {
@@ -37,6 +37,17 @@ type ModalFichaProps = {
 };
 
 type AtkRow = { nombre: string; stat: string; comp: boolean };
+
+function normalizarCaracteristicaAtaque(valor?: string | null): string {
+  const raw = (valor ?? "").trim().toLowerCase();
+  if (raw === "fuerza") return "Fuerza";
+  if (raw === "destreza") return "Destreza";
+  if (raw === "constitucion" || raw === "constitución") return "Constitución";
+  if (raw === "inteligencia") return "Inteligencia";
+  if (raw === "sabiduria" || raw === "sabiduría") return "Sabiduría";
+  if (raw === "carisma") return "Carisma";
+  return "Fuerza";
+}
 
 const salvOrder: { key: SalvacionKey; label: string }[] = [
   { key: "fue", label: "Fuerza" },
@@ -125,7 +136,6 @@ function calcularTirada(nombre: string, bono: number): TiradaResultado {
   };
 }
 
-/** Color del total según el d20 natural (escritorio: 1 crítico mal, 20 crítico bien). */
 function colorPorD20Natural(d: number): string {
   if (d === 1) return "#c0392b";
   if (d === 20) return "#27ae60";
@@ -184,8 +194,25 @@ export default function ModalFicha({ visible, cerrar, personaje }: ModalFichaPro
     if (!personaje) return;
     setCargando(true);
     try {
-      const f = await CRUDobtenerFicha(personaje.id_per);
+      const [f, ataquesApi] = await Promise.all([
+        CRUDobtenerFicha(personaje.id_per),
+        CRUDobtenerAtaquesPorPersonaje(personaje.id_per),
+      ]);
       setFicha(f);
+      const ataquesMapeados: AtkRow[] = ataquesApi.map((a) => ({
+        nombre: a.nombre ?? "",
+        stat: normalizarCaracteristicaAtaque(a.caracteristica),
+        comp: Boolean(a.es_competente),
+      }));
+      setAtk(
+        ataquesMapeados.length > 0
+          ? ataquesMapeados
+          : [
+              { nombre: "", stat: "Fuerza", comp: false },
+              { nombre: "", stat: "Fuerza", comp: false },
+              { nombre: "", stat: "Fuerza", comp: false },
+            ],
+      );
     } finally {
       setCargando(false);
     }

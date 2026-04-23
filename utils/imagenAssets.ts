@@ -1,4 +1,3 @@
-/** Deduce MIME a partir del prefijo base64 estándar (JPEG/PNG/GIF/WebP). */
 function sniffImageMimeFromBase64Payload(b64: string): string {
   const head = b64.slice(0, 32);
   if (head.startsWith("/9j") || head.startsWith("/9j/")) return "image/jpeg";
@@ -8,7 +7,6 @@ function sniffImageMimeFromBase64Payload(b64: string): string {
   return "image/jpeg";
 }
 
-/** Payload base64 puro para la API (sin prefijo `data:...`). */
 export function extractRawBase64ForApi(stored: string | null | undefined): string | null {
   if (stored == null) return null;
   const t = String(stored).trim();

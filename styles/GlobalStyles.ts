@@ -144,7 +144,6 @@ export const globalStyles = StyleSheet.create({
     width: 120,
     height: 120,
   },
-  /** Solo cabecera principal (lista); deja margen visual alrededor del asset. */
   imagenLogoCabecera: {
     width: 92,
     height: 92,

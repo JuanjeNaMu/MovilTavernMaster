@@ -9,7 +9,6 @@ import { TEMA, tintePorClase } from "../utils/temaApp";
 type CardPersonajeProps = {
   personaje: Personaje;
   claseFicha?: string | null;
-  /** Nombre de campaña (resuelto por `id_cam` en la lista). */
   nombreCampana?: string | null;
   seleccionado?: boolean;
   onPress?: () => void;

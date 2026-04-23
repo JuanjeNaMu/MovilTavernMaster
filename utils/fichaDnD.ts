@@ -96,7 +96,6 @@ export type HabilidadKey =
   | "sigilo"
   | "supervivencia";
 
-/** Competencias fijas por clase (misma lógica que `ControllerVerFicha.aplicarCompetenciasDeClase`). */
 export function keysCompetenciaClase(clase: string): {
   salv: SalvacionKey[];
   hab: HabilidadKey[];

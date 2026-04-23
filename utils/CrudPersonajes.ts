@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { DatosFormularioPersonaje, Personaje, Personajes } from "../types/Personaje";
 import type { Ficha } from "../types/Ficha";
+import type { Ataque } from "../types/Ataque";
 import { API_BASE_URL } from "./apiConfig";
 import { generarFichaPorClase } from "./fichaDnD";
 
@@ -26,7 +27,6 @@ function id_perStr(id: number): string {
   return String(id);
 }
 
-/** Solo personajes cuyo `jugador_padre` coincide con el usuario en sesión. */
 export async function CRUDcargarPersonajes(jugadorPadre: string): Promise<Personajes> {
   const resp = await axios.get<Personajes>(`${API_BASE_URL}/personajes/buscar/jugador-padre`, {
     params: { jugadorPadre: jugadorPadre.trim() },
@@ -34,7 +34,6 @@ export async function CRUDcargarPersonajes(jugadorPadre: string): Promise<Person
   return resp.data;
 }
 
-/** Nombre legible de la campaña por id (GET `/campanas/{id}` o variantes). */
 export async function CRUDobtenerNombreCampana(idCam: number): Promise<string | null> {
   try {
     const resp = await axios.get<Record<string, unknown>>(`${API_BASE_URL}/campanas/${idCam}`);
@@ -61,6 +60,15 @@ export async function CRUDobtenerFicha(idPer: number): Promise<Ficha | null> {
     return resp.data;
   } catch {
     return null;
+  }
+}
+
+export async function CRUDobtenerAtaquesPorPersonaje(idPer: number): Promise<Ataque[]> {
+  try {
+    const resp = await axios.get<Ataque[]>(`${API_BASE_URL}/ataques/personaje/${id_perStr(idPer)}`);
+    return Array.isArray(resp.data) ? resp.data : [];
+  } catch {
+    return [];
   }
 }
 

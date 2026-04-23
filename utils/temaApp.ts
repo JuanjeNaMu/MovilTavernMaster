@@ -1,7 +1,4 @@
-/**
- * Paleta base: carbón, rojo apagado y crema cálida.
- * Los tintes por clase solo en tarjetas y ficha.
- */
+
 export const TEMA = {
   negro: "#252423",
   negroElevado: "#32302E",
@@ -21,7 +18,6 @@ export type TinteClase = {
   fondoTarjeta: string;
   bordeTarjeta: string;
   badgeTexto: string;
-  /** Texto legible sobre el botón «Ver ficha» (mismo color que accent). */
   textoBotonClase: string;
 };
 

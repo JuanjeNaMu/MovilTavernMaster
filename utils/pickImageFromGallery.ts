@@ -1,9 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
 
-/**
- * Abre la galería y devuelve el JPEG/PNG en base64 (payload sin prefijo `data:`), o null si cancela.
- */
 export async function pickImageBase64FromLibrary(): Promise<string | null> {
   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
   if (status !== "granted") {
